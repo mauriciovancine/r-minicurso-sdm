@@ -18,7 +18,7 @@ A ampla disponibilidade de dados sobre a biodiversidade e variáveis ambientais 
 
 **Data**: 22/07/2019 (8:00 h - 16:00 h)
 
-**Local**: a ser definido
+**Local**: [Centro de Convenções da Unicamp](https://goo.gl/maps/x2JnxBeGkx1yZghu6)
 
 **Contato**: 
 Para mais informações ou dúvidas, envie e-mail para:
