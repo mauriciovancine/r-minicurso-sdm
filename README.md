@@ -51,7 +51,7 @@ Mac: Sei não...
 Baixar o Maxent: https://biodiversityinformatics.amnh.org/open_source/maxent/
 
 **Instalar pacotes no R** <br>
-Com o R e RStudio instalados, basta rodar o [script](https://gitlab.com/mauriciovancine/course-sdm/blob/master/00_scripts/00_script_install_packages.R) para instalar os pacotes
+Com o R e RStudio instalados, basta abrir e rodar o [script](https://gitlab.com/mauriciovancine/course-sdm/blob/master/00_scripts/00_script_install_packages.R) para instalar os pacotes necessários
 
 ![Alt Text](https://appsilon.com/wp-content/uploads/2019/03/blog_code_execution_optimized.gif)
 
