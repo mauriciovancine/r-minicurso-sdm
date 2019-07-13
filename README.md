@@ -20,7 +20,7 @@ A ampla quantidade e disponibilidade de dados sobre a biodiversidade e variávei
 
 **Local**: [Centro de Convenções da Unicamp](https://goo.gl/maps/x2JnxBeGkx1yZghu6)
 
-**Ementa**: [Ementa]()
+**Ementa**: [Ementa](https://gitlab.com/mauriciovancine/course-sdm/blob/master/00_ementa)
 
 **Contato**: 
 Para mais informações ou dúvidas, envie e-mail para:
