@@ -20,8 +20,7 @@ A ampla quantidade e disponibilidade de dados sobre a biodiversidade e variávei
 
 **Local**: [Centro de Convenções da Unicamp](https://goo.gl/maps/x2JnxBeGkx1yZghu6)
 
-**Ementa**
-[Ementa]()
+**Ementa**: [Ementa]()
 
 **Contato**: 
 Para mais informações ou dúvidas, envie e-mail para:
@@ -62,7 +61,7 @@ Uma vez instalados os pacotes no R, deszip o arquivo baixado no item 3. Maxent, 
 Windows: C:/Program Files/R/R-3.6.1/library/dismo <br>
 Linux e Mac:   /home/usuario/R/x86_64-pc-linux-gnu-library/3.6/dismo/java
 
-**Dúvidas ou dificuldades**: 
+**Dúvidas ou dificuldades** <br>
 Para ajuda, envie e-mail para: <br>
 
 - Maurício Vancine (mauricio.vancine@gmail.com)
