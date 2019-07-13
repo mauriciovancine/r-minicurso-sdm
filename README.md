@@ -51,12 +51,13 @@ Baixar o Maxent: https://biodiversityinformatics.amnh.org/open_source/maxent/
 
 **Instalar os pacotes no R** <br>
 Com o R e o RStudio instalados, basta abrir e rodar o [script](https://gitlab.com/mauriciovancine/course-sdm/blob/master/00_scripts/00_script_install_packages.R) para instalar os pacotes necessários. <br>
-Abrir o script no software RStudio e rodar cada comando. Basta colocar o cursos na linha do comando e precionar: `Crtl + Enter`, como mostra o gif abaixo:
+Abra o script no software RStudio e rode cada linha de comando. <br>
+Para isso, basta colocar o cursor na linha do comando e precionar: `Crtl + Enter`, como mostra o gif abaixo:
 
 ![Alt Text](https://appsilon.com/wp-content/uploads/2019/03/blog_code_execution_optimized.gif)
 
 **Mover o arquivo do Maxent para a pasta do pacote dismo** <br>
-Uma vez instalados os pacotes no R, deszip o arquivo baixado no item 3. Maxent, e mova o arquivo **maxent.jar** para a pasta: <br>
+Uma vez instalados os pacotes no R, deszipe o arquivo baixado no item 3. Maxent (**maxent.zip**), e mova o arquivo **maxent.jar** para a pasta: <br>
 
 Windows: C:/Program Files/R/R-3.6.1/library/dismo <br>
 Linux e Mac:   /home/usuario/R/x86_64-pc-linux-gnu-library/3.6/dismo/java
