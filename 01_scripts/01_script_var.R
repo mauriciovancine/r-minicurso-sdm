@@ -36,8 +36,8 @@ dir()
 
 # download ----------------------------------------------------------------
 # directory
-dir.create("02_var")
-setwd("02_var")
+dir.create("03_var")
+setwd("03_var")
 
 # download
 download.file(url = "http://biogeo.ucdavis.edu/data/worldclim/v2.0/tif/base/wc2.0_10m_bio.zip",
@@ -121,6 +121,8 @@ landscapetools::show_landscape(var_mask_br$bio01)
 
 # resolution
 raster::res(var_mask_br)
+raster::res(var_mask_br)[1]
+raster::res(var_mask_br)[1]/(30/3600) # ~km
 
 # aggregation factor 
 res_actual <- raster::res(var_mask_br)[1]
