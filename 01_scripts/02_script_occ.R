@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------
-# occ - download and filter
+# occ - download and taxonomic, data, and spatial filter
 # mauricio vancine - mauricio.vancine@gmail.com
 # 15-07-2019
 # -------------------------------------------------------------------------
@@ -38,7 +38,7 @@ library(tidyverse)
 # https://github.com/r-spatial/sf
 
 # directory
-path <- "/home/mude/data/curso_mde_9cbh"
+path <- "/home/mude/data/gitlab/course-sdm"
 setwd(path)
 dir()
 
@@ -245,19 +245,50 @@ ggplot() +
   geom_point(data = occ_data_tax_date_spa_lim, aes(x = longitude, y = latitude), color = "red") +
   theme_bw()
 
+# oppc --------------------------------------------------------------------
+# directory
+setwd("/home/mude/data/gitlab/course-sdm/03_var/02_pca")
+
+# import raster id
+var_id <- raster::raster("wc20_mascara_ne_brasil_res05g_pc01.tif")
+var_id
+
+var_id[!is.na(var_id)] <- raster::cellFromXY(var_id, raster::rasterToPoints(var_id)[, 1:2])
+landscapetools::show_landscape(var_id)
+
+# oppc
+occ_data_tax_date_spa_lim_oppc <- occ_data_tax_date_spa_lim %>% 
+  dplyr::mutate(oppc = raster::extract(var_id, dplyr::select(., longitude, latitude))) %>% 
+  dplyr::distinct(species, oppc, .keep_all = TRUE) %>% 
+  dplyr::filter(!is.na(oppc)) %>% 
+  dplyr::add_count(species) %>% 
+  dplyr::arrange(species)
+occ_data_tax_date_spa_lim_oppc
+
+# verify
+table(occ_data_tax_date_spa_lim$species)
+table(occ_data_tax_date_spa_lim_oppc$species)
+
+# map
+landscapetools::show_landscape(var_id) +
+  geom_point(data = occ_data_tax_date_spa_lim, aes(longitude, latitude), size = 3, alpha = .7) +
+  geom_point(data = occ_data_tax_date_spa_lim_oppc, aes(longitude, latitude), size = 3, pch = 20, alpha = .7, color = "red")
+
 # verify filters ----------------------------------------------------------
 occ_data_tax$species %>% table
 occ_data_tax_date$species %>% table
 occ_data_tax_date_spa$species %>% table
 occ_data_tax_date_spa_lim$species %>% table
+occ_data_tax_date_spa_lim_oppc$species %>% table
 
 # export ------------------------------------------------------------------
 # directory
+setwd("..")
 dir.create("02_occ")
 setwd("02_occ")
 
 # export
 readr::write_csv(occ_data, paste0("occ_spocc_bruto_", lubridate::today(), ".csv"))
-readr::write_csv(occ_data_tax_date_spa_lim, paste0("occ_spocc_filtro_taxonomico_data_espatial_limite.csv"))
+readr::write_csv(occ_data_tax_date_spa_lim_oppc, paste0("occ_spocc_filtro_taxonomico_data_espatial_limite_oppc.csv"))
 
 # end ---------------------------------------------------------------------

@@ -64,7 +64,4 @@ if(!require(vegan)) install.packages("vegan", dependencies = TRUE)
 # notification - sound
 if(!require(beepr)) install.packages("beepr", dependencies = TRUE)
 
-# notification - email
-if(!require(mailR)) install.packages("mailR", dependencies = TRUE)
-
 # end ---------------------------------------------------------------------
