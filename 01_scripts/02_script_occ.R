@@ -212,11 +212,8 @@ occ_data_tax_date_spa <- occ_data_na %>%
 occ_data_tax_date_spa
 
 # resume data
-occ_data_na$species %>% 
-  table
-
-occ_data_tax_date_spa$species %>% 
-  table
+occ_data_na$species %>% table
+occ_data_tax_date_spa$species %>% table
 
 # map
 ggplot() +
@@ -247,7 +244,7 @@ ggplot() +
 
 # oppc --------------------------------------------------------------------
 # directory
-setwd("/home/mude/data/gitlab/course-sdm/03_var/02_pca")
+setwd(path); setwd("03_var/02_pca")
 
 # import raster id
 var_id <- raster::raster("wc20_mascara_ne_brasil_res05g_pc01.tif")
@@ -283,7 +280,7 @@ occ_data_tax_date_spa_lim_oppc$species %>% table
 
 # export ------------------------------------------------------------------
 # directory
-setwd("..")
+setwd(path)
 dir.create("02_occ")
 setwd("02_occ")
 
