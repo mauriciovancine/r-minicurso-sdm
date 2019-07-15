@@ -16,7 +16,7 @@ A ampla quantidade e disponibilidade de dados sobre a biodiversidade e variávei
 
 ### Informações aos participantes
 
-**Data**: 22/07/2019 (8:00 h - 16:00 h)
+**Data**: 22/07/2019 (7:30 h - 16:00 h)
 
 **Local**: [Centro de Convenções da Unicamp](https://goo.gl/maps/x2JnxBeGkx1yZghu6)
 
@@ -40,19 +40,19 @@ Será necessário que todos tragam seus próprios notebooks.
 1. R e RStudio <br>
 Instalar a versão mais recente do R (3.6.1): https://www.r-project.org/ <br>
 Instalar o RStudio: https://www.rstudio.com/ <br>
-Vídeo de instalação: https://youtu.be/l1bWvZMNMCM <br>
-Curso de introdução à linguagem R: http://www.bosontreinamentos.com.br/category/programacao-em-r/
+Vídeo de instalação do R e do RStudio: https://youtu.be/l1bWvZMNMCM <br>
+Curso de introdução à linguagem R (recomendado): http://www.bosontreinamentos.com.br/category/programacao-em-r/
 
 2. Java <br>
-Instalar o Java (atentar para versão 64 bits): https://www.java.com/en/download/manual.jsp <br>
+Instalar o Java (atentar para a versão 64 bits): https://www.java.com/en/download/manual.jsp <br>
 
 3. Maxent <br>
 Baixar o Maxent: https://biodiversityinformatics.amnh.org/open_source/maxent/
 
 **Instalar os pacotes no R** <br>
-Com o R e o RStudio instalados, basta abrir e rodar o [script](https://gitlab.com/mauriciovancine/course-sdm/blob/master/00_scripts/00_script_install_packages.R) para instalar os pacotes necessários. <br>
-Abra o script no software RStudio e rode cada linha de comando. <br>
-Para isso, basta colocar o cursor na linha do comando e precionar: `Crtl + Enter`, como mostra o gif abaixo:
+Com o R e o RStudio instalados, baixe esse [script](https://gitlab.com/mauriciovancine/course-sdm/blob/master/00_scripts/00_script_install_packages.R) (scripts são roteiros que possuem comandos, como um rascunho). <br>
+Abra o script baixado (**00_script_install_packages.R**) no software RStudio e rode cada linha de comando. <br>
+Para isso, basta colocar o cursor na linha a ser executada e precionar: `Crtl + Enter`, como mostra o gif abaixo:
 
 ![Alt Text](https://appsilon.com/wp-content/uploads/2019/03/blog_code_execution_optimized.gif)
 
