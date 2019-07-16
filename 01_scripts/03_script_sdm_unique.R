@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # sdm - unique algorithms
 # mauricio vancine - mauricio.vancine@gmail.com
-# 15-07-2019
+# 16-07-2019
 # -------------------------------------------------------------------------
 
 # preparate r -------------------------------------------------------------
@@ -51,11 +51,11 @@ file.exists(paste0(system.file(package = "dismo"), "/java/maxent.jar"))
 # enms --------------------------------------------------------------------
 # diretory
 setwd(path)
-dir.create("04_sdm_unique")
-setwd("04_sdm_unique")
+dir.create("04_sdm_uniquo")
+setwd("04_sdm_uniquo")
 
 # preparate data ----------------------------------------------------------
-# selecting presence and pseudo-absence/backround data
+# selecting presence and pseudo-absence/background data
 pr_specie <- occ %>% 
   dplyr::select(longitude, latitude) %>% 
   dplyr::mutate(id = seq(nrow(.)))
@@ -71,7 +71,7 @@ landscapetools::show_landscape(var$pc01) +
   geom_point(data = pr_specie, aes(longitude, latitude), size = 3, alpha = .7, color = "red") +
   geom_point(data = bg_specie, aes(longitude, latitude), size = 3, alpha = .7, color = "blue")
 
-# selecting train and test coordinates	
+# selecting train and test ids
 pr_sample_train <- pr_specie %>% 
   dplyr::sample_frac(.7) %>% 
   dplyr::select(id) %>% 
@@ -115,19 +115,19 @@ bioclim_fit <- dismo::bioclim(x = train[train$pb == 1, -1])
 plot(bioclim_fit)
 dismo::response(bioclim_fit)
 
-# 1.2 projection
+# 1.2 prediction
 bioclim_proj <- dismo::predict(var, bioclim_fit, progress = "text")	
 bioclim_proj
 
+# map
+landscapetools::show_landscape(bioclim_proj)
+
 # model export
 raster::writeRaster(x = bioclim_proj, 
-                    filename = "enm_haddadus_binotatus_bioclim", 
+                    filename = "sdm_haddadus_binotatus_bioclim", 
                     format = "GTiff", 
                     options = c("COMPRESS=DEFLATE"), 
                     overwrite = TRUE)
-
-# map
-landscapetools::show_landscape(bioclim_proj)
 
 # 1.3 evaluation
 bioclim_eval <- dismo::evaluate(p = test %>% dplyr::filter(pb == 1) %>% dplyr::select(-1),  
@@ -167,28 +167,32 @@ landscapetools::show_landscape(bioclim_proj_thr_spec_sens, discrete = TRUE) +
   geom_point(data = pr_specie %>% dplyr::filter(id %in% pr_sample_train), 
              aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 20) +
   geom_point(data = pr_specie %>% dplyr::filter(!id %in% pr_sample_train), 
-             aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 8)
+             aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 8) +
+  geom_point(data = bg_specie %>% dplyr::filter(id %in% pr_sample_train), 
+             aes(longitude, latitude), size = 3, alpha = .7, color = "blue", pch = 20) +
+  geom_point(data = bg_specie %>% dplyr::filter(!id %in% pr_sample_train), 
+             aes(longitude, latitude), size = 3, alpha = .7, color = "blue", pch = 8)
 
-#  presence absence -----------------------------------------------------
+#  presence and absence -------------------------------------------------
 # 2 glm
 # 2.1 fit
 glm_fit <- glm(pb ~ ., family = binomial(link = "logit"), data = train)	
 summary(glm_fit)
 dismo::response(glm_fit)
 
-# 2.2 projection
+# 2.2 prediction
 glm_proj <- dismo::predict(var, glm_fit, progress = "text")	
 glm_proj
 
+# map
+landscapetools::show_landscape(glm_proj)
+
 # model export
 raster::writeRaster(x = glm_proj, 
-                    filename = "enm_haddadus_binotatus_glm", 
+                    filename = "sdm_haddadus_binotatus_glm", 
                     format = "GTiff", 
                     options = c("COMPRESS=DEFLATE"), 
                     overwrite = TRUE)
-
-# map
-landscapetools::show_landscape(glm_proj)
 
 # 2.3 evaluation
 glm_eval <- dismo::evaluate(p = test %>% dplyr::filter(pb == 1) %>% dplyr::select(-1),  
@@ -225,7 +229,11 @@ landscapetools::show_landscape(glm_proj_thr_spec_sens, discrete = TRUE) +
   geom_point(data = pr_specie %>% dplyr::filter(id %in% pr_sample_train), 
              aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 20) +
   geom_point(data = pr_specie %>% dplyr::filter(!id %in% pr_sample_train), 
-             aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 8)
+             aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 8) +
+  geom_point(data = bg_specie %>% dplyr::filter(id %in% pr_sample_train), 
+             aes(longitude, latitude), size = 3, alpha = .7, color = "blue", pch = 20) +
+  geom_point(data = bg_specie %>% dplyr::filter(!id %in% pr_sample_train), 
+             aes(longitude, latitude), size = 3, alpha = .7, color = "blue", pch = 8)
 
 #  presence-background --------------------------------------------------
 # 3 maxent
@@ -235,19 +243,19 @@ plot(maxent_fit)
 response(maxent_fit)
 maxent_fit # browser da internet
 
-# 3.1.2 projection
+# 3.1.2 prediction
 maxent_proj <- dismo::predict(var, maxent_fit, progress = "text")	
 maxent_proj
 
+# map
+landscapetools::show_landscape(maxent_proj)
+
 # model export
 raster::writeRaster(x = maxent_proj, 
-                    filename = "enm_haddadus_binotatus_maxent", 
+                    filename = "sdm_haddadus_binotatus_maxent", 
                     format = "GTiff", 
                     options = c("COMPRESS=DEFLATE"), 
                     overwrite = TRUE)
-
-# map
-landscapetools::show_landscape(maxent_proj)
 
 # 3.1.3 evaluation
 maxent_eval <- dismo::evaluate(p = test %>% dplyr::filter(pb == 1) %>% dplyr::select(-1),  
@@ -284,7 +292,11 @@ landscapetools::show_landscape(maxent_proj_thr_spec_sens, discrete = TRUE) +
   geom_point(data = pr_specie %>% dplyr::filter(id %in% pr_sample_train), 
              aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 20) +
   geom_point(data = pr_specie %>% dplyr::filter(!id %in% pr_sample_train), 
-             aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 8)
+             aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 8) +
+  geom_point(data = bg_specie %>% dplyr::filter(id %in% pr_sample_train), 
+             aes(longitude, latitude), size = 3, alpha = .7, color = "blue", pch = 20) +
+  geom_point(data = bg_specie %>% dplyr::filter(!id %in% pr_sample_train), 
+             aes(longitude, latitude), size = 3, alpha = .7, color = "blue", pch = 8)
 
 # maps --------------------------------------------------------------------
 sdm <- raster::stack(bioclim_proj, bioclim_proj_thr_spec_sens, 

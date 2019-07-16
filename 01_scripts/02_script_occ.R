@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # occ - download and taxonomic, data, and spatial filter
 # mauricio vancine - mauricio.vancine@gmail.com
-# 15-07-2019
+# 16-07-2019
 # -------------------------------------------------------------------------
 
 # preparate r -------------------------------------------------------------
@@ -155,11 +155,8 @@ occ_data_tax_date <- occ_data_tax %>%
 occ_data_tax_date
 
 # verify
-occ_data_tax$year %>% 
-  table(useNA = "always")
-
-occ_data_tax_date$year %>% 
-  table(useNA = "always")
+occ_data_tax$year %>% table(useNA = "always")
+occ_data_tax_date$year %>% table(useNA = "always")
 
 ggplot() + 
   geom_histogram(data = occ_data_tax_date, aes(year), color = "darkred", fill = "red", bins = 10, alpha = .5) +

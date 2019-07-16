@@ -27,7 +27,7 @@ occ
 
 # binatization - cut threshold --------------------------------------------
 # directory
-setwd(path); dir.create("08_ensemble_thr"); setwd("08_ensemble_thr")
+setwd(path); dir.create("08_consenso_thr"); setwd("08_consenso_thr")
 
 for(i in occ$species %>% unique){
   
@@ -36,7 +36,7 @@ for(i in occ$species %>% unique){
   print(paste0("Binarizate weighted average to ", i))
   
   # directory
-  setwd(path); setwd("06_ensemble_weighted_average")
+  setwd(path); setwd("06_consenso_media_ponderada")
   
   # import
   ens_w <- dir(pattern = ".tif$") %>% 
@@ -56,13 +56,13 @@ for(i in occ$species %>% unique){
   )
   
   # directory
-  setwd(path); setwd("08_ensemble_thr")
+  setwd(path); setwd("08_consenso_thr")
   
   for(j in li_thrs %>% length %>% seq){
     
     # export
     raster::writeRaster(x = ens_w >= li_thrs[[j]], 
-                        filename = paste0("ensemble_weighted_average_thr_", names(li_thrs)[j], "_", i), 
+                        filename = paste0("consenso_media_ponderada_thr_", names(li_thrs)[j], "_", i), 
                         format = "GTiff", 
                         options = c("COMPRESS=DEFLATE"), 
                         overwrite = TRUE)
@@ -75,7 +75,7 @@ for(i in occ$species %>% unique){
   print(paste0("Binarizate frequency to ", i))
   
   # directory
-  setwd(path); setwd("07_ensemble_frequency")
+  setwd(path); setwd("07_consenso_frequencia")
   
   # import
   ens_f <- dir(pattern = ".tif$") %>% 
@@ -95,13 +95,13 @@ for(i in occ$species %>% unique){
   )
   
   # directory
-  setwd(path); setwd("08_ensemble_thr")
+  setwd(path); setwd("08_consenso_thr")
   
   for(j in li_thrs %>% length %>% seq){
     
     # export
     raster::writeRaster(x = ens_f >= li_thrs[[j]], 
-                        filename = paste0("ensemble_frequency_thr_", names(li_thrs)[j], "_", i), 
+                        filename = paste0("consenso_frequencia_thr_", names(li_thrs)[j], "_", i), 
                         format = "GTiff", 
                         options = c("COMPRESS=DEFLATE"), 
                         overwrite = TRUE)

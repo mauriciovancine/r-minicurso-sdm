@@ -22,7 +22,7 @@ dir()
 
 # import evaluates --------------------------------------------------------
 # directory
-setwd("05_sdm_multiple")
+setwd("05_sdm_multiplo")
 
 # list files
 csv <- dir(pattern = "eval_", recursive = TRUE)
@@ -78,12 +78,12 @@ for(i in eva$species %>% unique){
   
   # directory
   setwd(path)
-  dir.create("06_ensemble_weighted_average")
-  setwd("06_ensemble_weighted_average")
+  dir.create("06_consenso_media_ponderada")
+  setwd("06_consenso_media_ponderada")
   
   # export
   raster::writeRaster(x = ens, 
-                      filename = paste0("ensemble_weighted_average_", i), 
+                      filename = paste0("consenso_media_ponderada_", i), 
                       format = "GTiff", 
                       options = c("COMPRESS=DEFLATE"), 
                       overwrite = TRUE)

@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # var - download, adjust extention, adjust resolution, correlation and pca
 # mauricio vancine - mauricio.vancine@gmail.com
-# 15-07-2019
+# 16-07-2019
 # -------------------------------------------------------------------------
 
 # preparate r -------------------------------------------------------------
@@ -45,9 +45,6 @@ download.file(url = "http://biogeo.ucdavis.edu/data/worldclim/v2.0/tif/base/wc2.
 
 # unzip
 unzip("wc2.0_10m_bio.zip")
-
-# delete zip file
-unlink("wc2.0_10m_bio.zip")
 
 # bioclimates
 # BIO01 = Temperatura media anual

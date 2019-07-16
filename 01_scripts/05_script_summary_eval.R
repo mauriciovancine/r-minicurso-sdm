@@ -19,7 +19,7 @@ dir()
 
 # import evaluate data ----------------------------------------------------
 # directory
-setwd("05_sdm_multiple")
+setwd("05_sdm_multiplo")
 dir()
 
 # import

@@ -66,8 +66,8 @@ file.exists(paste0(system.file(package = "dismo"), "/java/maxent.jar"))
 # enms --------------------------------------------------------------------
 # diretory
 setwd(path)
-dir.create("05_sdm_multiple")
-setwd("05_sdm_multiple")
+dir.create("05_sdm_multiplo")
+setwd("05_sdm_multiplo")
 
 # parameters
 replica <- 10
