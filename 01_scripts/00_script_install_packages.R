@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # install packages for sdms
 # mauricio vancine - mauricio.vancine@gmail.com
-# 16-07-2019
+# 17-07-2019
 # -------------------------------------------------------------------------
 
 # occurrences -------------------------------------------------------------
@@ -30,18 +30,11 @@ if(!require(wesanderson)) devtools::install_github("karthik/wesanderson")
 
 # limits
 if(!require(rnaturalearth)) install.packages("rnaturalearth", dependencies = TRUE)
-if(!require(rnaturalearthdata)) install.packages("rnaturalearthdata", dependencies = TRUE)
-if(!require(rnaturalearthhires)) install.packages("rnaturalearthhires", repos = "http://packages.ropensci.org", type = "source")
 
 # selection - correlation
 if(!require(corrr)) install.packages("corrr", dependencies = TRUE)
 if(!require(caret)) install.packages("caret", dependencies = TRUE)
 if(!require(psych)) install.packages("psych", dependencies = TRUE)
-
-# selection - pca
-if(!require(factoextra)) install.packages("factoextra", dependencies = TRUE)
-if(!require(FactoMineR)) install.packages("FactoMineR", dependencies = TRUE)
-if(!require(RStoolbox)) install.packages("RStoolbox", dependencies = TRUE)
 
 # algorithms --------------------------------------------------------------
 # bioclim, domain, and mahalanobis
@@ -53,12 +46,8 @@ if(!require(kernlab)) install.packages("kernlab", dependencies = TRUE)
 # random forest
 if(!require(randomForest)) install.packages("randomForest", dependencies = TRUE)
 
-# maxent
-if(!require(rJava)) install.packages("rJava", dependencies = TRUE) # download and install java: https://www.java.com/en/download/
-
 # ensemble
 if(!require(vegan)) install.packages("vegan", dependencies = TRUE)
-
 
 # notifications -----------------------------------------------------------
 # notification - sound

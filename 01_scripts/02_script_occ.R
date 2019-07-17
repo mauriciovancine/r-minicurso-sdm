@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # occ - download and taxonomic, data, and spatial filter
 # mauricio vancine - mauricio.vancine@gmail.com
-# 16-07-2019
+# 17-07-2019
 # -------------------------------------------------------------------------
 
 # preparate r -------------------------------------------------------------
@@ -15,8 +15,6 @@ library(lubridate)
 library(raster)
 library(rgdal)
 library(rnaturalearth)
-library(rnaturalearthdata)
-library(rnaturalearthhires)
 library(sf)
 library(spocc)
 library(taxize)
@@ -88,7 +86,7 @@ occ_data <- occ %>%
 occ_data
 
 # limit brazil
-br <- rnaturalearth::ne_states(country = "Brazil", returnclass = "sf")
+br <- rnaturalearth::ne_countries(country = "Brazil", scale = "small", returnclass = "sf")
 br
 
 # map
@@ -128,13 +126,8 @@ occ_data_tax <- dplyr::inner_join(occ_data, gnr_tax, c(name = "matched_name")) %
 occ_data_tax
 
 # confer
-occ_data$name %>% 
-  table %>% 
-  tibble::as_tibble()
-
-occ_data_tax$name %>% 
-  table %>% 
-  tibble::as_tibble()
+occ_data$name %>% table %>% tibble::as_tibble()
+occ_data_tax$name %>% table %>% tibble::as_tibble()
 
 # map
 ggplot() +
@@ -150,7 +143,7 @@ occ_data_tax$year %>%
 
 # year > 1960 and < 2019
 occ_data_tax_date <- occ_data_tax %>% 
-  dplyr::filter(year > 1960, year <= 2019, !is.na(year)) %>% 
+  dplyr::filter(year > 1970, year <= 2019, !is.na(year)) %>% 
   dplyr::arrange(year)
 occ_data_tax_date
 
@@ -181,7 +174,6 @@ flags_spatial <- CoordinateCleaner::clean_coordinates(
   species = "species",
   lon = "longitude", 
   lat = "latitude",
-  seas_scale = 10, 
   tests = c("capitals", # radius around capitals
             "centroids", # radius around country and province centroids
             "duplicates", # records from one species with identical coordinates
@@ -201,7 +193,6 @@ flags_spatial <- CoordinateCleaner::clean_coordinates(
 #' FALSE = potentially problematic coordinate entries
 flags_spatial %>% head
 summary(flags_spatial)
-flags_spatial$.summary
 
 # exclude records flagged by any test
 occ_data_tax_date_spa <- occ_data_na %>% 
@@ -219,61 +210,45 @@ ggplot() +
   geom_point(data = occ_data_tax_date_spa, aes(x = longitude, y = latitude), color = "red") +
   theme_bw()
 
-# limit filter
-occ_data_tax_date_spa_lim <- occ_data_tax_date_spa %>% 
-  dplyr::mutate(x = longitude, y = latitude) %>% 
-  sf::st_as_sf(coords = c("x", "y"), crs = 4326) %>% 
-  st_intersects(., sf::st_union(br), sparse = FALSE) %>% 
-  tibble::as_tibble() %>% 
-  dplyr::select(V1) %>%
-  dplyr::rename(lim = V1) %>% 
-  dplyr::bind_cols(occ_data_tax_date_spa, .) %>% 
-  dplyr::filter(lim == TRUE) %>% 
-  dplyr::select(-lim)
-occ_data_tax_date_spa_lim
-
-# map
-ggplot() +
-  geom_sf(data = br) +
-  geom_point(data = occ_data, aes(x = longitude, y = latitude)) +
-  geom_point(data = occ_data_tax_date_spa_lim, aes(x = longitude, y = latitude), color = "red") +
-  theme_bw()
-
 # oppc --------------------------------------------------------------------
 # directory
-setwd(path); setwd("03_var/02_pca")
+setwd(path); setwd("03_var")
 
 # import raster id
-var_id <- raster::raster("wc20_mascara_ne_brasil_res05g_pc01.tif")
+var_id <- raster::raster("wc20_brasil_res05g_bio03.tif")
 var_id
 
 var_id[!is.na(var_id)] <- raster::cellFromXY(var_id, raster::rasterToPoints(var_id)[, 1:2])
-landscapetools::show_landscape(var_id)
+landscapetools::show_landscape(var_id) +
+  theme(legend.position = "none")
 
 # oppc
-occ_data_tax_date_spa_lim_oppc <- occ_data_tax_date_spa_lim %>% 
+occ_data_tax_date_spa_oppc <- occ_data_tax_date_spa %>% 
   dplyr::mutate(oppc = raster::extract(var_id, dplyr::select(., longitude, latitude))) %>% 
   dplyr::distinct(species, oppc, .keep_all = TRUE) %>% 
   dplyr::filter(!is.na(oppc)) %>% 
   dplyr::add_count(species) %>% 
   dplyr::arrange(species)
-occ_data_tax_date_spa_lim_oppc
+occ_data_tax_date_spa_oppc
 
 # verify
-table(occ_data_tax_date_spa_lim$species)
-table(occ_data_tax_date_spa_lim_oppc$species)
+table(occ_data_tax_date_spa$species)
+table(occ_data_tax_date_spa_oppc$species)
 
 # map
-landscapetools::show_landscape(var_id) +
-  geom_point(data = occ_data_tax_date_spa_lim, aes(longitude, latitude), size = 3, alpha = .7) +
-  geom_point(data = occ_data_tax_date_spa_lim_oppc, aes(longitude, latitude), size = 3, pch = 20, alpha = .7, color = "red")
+ggplot() +
+  geom_sf(data = br) +
+  geom_polygon(data = var_id %>% raster::rasterToPolygons() %>% fortify, aes(x = long, y = lat, group = group), 
+               fill = NA, color = "black", size = .2) +
+  geom_point(data = occ_data_tax_date_spa, aes(x = longitude, y = latitude)) +
+  geom_point(data = occ_data_tax_date_spa_oppc, aes(x = longitude, y = latitude), color = "red") +
+  theme_bw()
 
 # verify filters ----------------------------------------------------------
 occ_data_tax$species %>% table
 occ_data_tax_date$species %>% table
 occ_data_tax_date_spa$species %>% table
-occ_data_tax_date_spa_lim$species %>% table
-occ_data_tax_date_spa_lim_oppc$species %>% table
+occ_data_tax_date_spa_oppc$species %>% table
 
 # export ------------------------------------------------------------------
 # directory

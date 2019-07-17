@@ -1,7 +1,7 @@
   # -------------------------------------------------------------------------
   # maps
   # mauricio vancine - mauricio.vancine@gmail.com
-  # 15-07-2019
+  # 17-07-2019
   # -------------------------------------------------------------------------
   
   # preparate r -------------------------------------------------------------
@@ -27,7 +27,7 @@
   occ
   
   # brazil
-  br <- rnaturalearth::ne_states(country = "Brazil", returnclass = "sf")
+  br <- rnaturalearth::ne_countries(country = "Brazil", returnclass = "sf")
   br
   ggplot(br) + geom_sf() + theme_bw()
   
@@ -65,7 +65,8 @@
         geom_raster(data = raster::rasterToPoints(ens[[j]]) %>% tibble::as_tibble() %>% dplyr::rename(ens = names(ens[[j]])),
                     aes(x, y, fill = ens)) +
         geom_sf(data = br, fill = NA, color = "gray30") +
-        geom_point(data = occ, aes(longitude, latitude, color = species %>% str_to_title() %>% sub("_", " ", .)), size = 2, alpha = .7) +
+        geom_point(data = occ, aes(longitude, latitude, color = species %>% str_to_title() %>% sub("_", " ", .)), 
+                   size = 2, alpha = .7) +
         scale_color_manual(values = "black", guide = guide_legend(order = 1)) +
         scale_fill_gradientn(colours = wesanderson::wes_palette("Zissou1", n = 100, type = "continuous")) +
         coord_sf(xlim = c(-74, -35)) +
@@ -79,7 +80,7 @@
         theme(title = element_text(size = 12, face = "bold"),
               legend.title = element_text(size = 15, face = "bold"),
               legend.background = element_rect(fill = "white",
-                                               size = 0.5, 
+                                               size = 0.3, 
                                                linetype = "solid", 
                                                colour = "black"),
               axis.title = element_text(size = 15, face = "plain"),

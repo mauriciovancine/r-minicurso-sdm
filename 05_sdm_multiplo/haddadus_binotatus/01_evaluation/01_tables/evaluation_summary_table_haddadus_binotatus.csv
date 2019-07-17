@@ -1,8 +1,7 @@
 species,algorithm,tss_mean,tss_sd,auc_mean,auc_sd
-Haddadus binotatus,bioclim,0.693,0.112,0.855,0.051
-Haddadus binotatus,domain,0.764,0.096,0.924,0.047
-Haddadus binotatus,glm,0.843,0.1,0.933,0.052
-Haddadus binotatus,mahalanobis,0.864,0.086,0.964,0.033
-Haddadus binotatus,maxent,0.836,0.089,0.929,0.053
-Haddadus binotatus,randomforest,0.843,0.056,0.959,0.024
-Haddadus binotatus,svm,0.879,0.076,0.965,0.024
+Haddadus binotatus,bioclim,0.671,0.131,0.847,0.065
+Haddadus binotatus,domain,0.729,0.105,0.903,0.043
+Haddadus binotatus,glm,0.736,0.101,0.911,0.039
+Haddadus binotatus,mahalanobis,0.843,0.074,0.917,0.05
+Haddadus binotatus,randomforest,0.864,0.053,0.946,0.036
+Haddadus binotatus,svm,0.907,0.076,0.957,0.051

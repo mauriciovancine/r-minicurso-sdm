@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
-# var - download, adjust extention, adjust resolution, correlation and pca
+# var - download, adjust extention, adjust resolution, and correlation
 # mauricio vancine - mauricio.vancine@gmail.com
-# 16-07-2019
+# 17-07-2019
 # -------------------------------------------------------------------------
 
 # preparate r -------------------------------------------------------------
@@ -9,16 +9,11 @@
 rm(list = ls())
 
 # packages
-library(factoextra)
-library(FactoMineR)
 library(landscapetools)
 library(psych)
 library(raster)
 library(rgdal)
 library(rnaturalearth)
-library(rnaturalearthdata)
-library(rnaturalearthhires)
-library(RStoolbox)
 library(tidyverse)
 library(wesanderson)
 
@@ -69,8 +64,7 @@ unzip("wc2.0_10m_bio.zip")
 
 # adjust extention --------------------------------------------------------
 # limit
-br <- rnaturalearth::ne_countries(scale = "large", returnclass = "sf") %>% 
-  filter(name == "Brazil")
+br <- rnaturalearth::ne_countries(country = "Brazil", scale = "small", returnclass = "sf")
 br
 
 # plot
@@ -98,31 +92,24 @@ plot(var$bio01)
 
 # adust extention
 # crop = adjust extention
-var_crop_br <- raster::crop(x = var, y = br)
-var_crop_br
-
-# plot
-plot(var_crop_br$bio01)
-
-# adjust to limite
 # mask = adjust to mask
-var_mask_br <- raster::mask(x = var_crop_br, mask = br)
-var_mask_br
+var_br <- raster::crop(x = var, y = br) %>% 
+  raster::mask(mask = br)
+var_br
 
 # plot
-plot(var_mask_br$bio01)
+landscapetools::show_landscape(var_br$bio01)  +
+  geom_polygon(data = var_br$bio01 %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "black", size = .1) +
+  theme(legend.position = "none")
 
 # adjust resolution -------------------------------------------------------
-# plot
-landscapetools::show_landscape(var_mask_br$bio01) 
-
 # resolution
-raster::res(var_mask_br)
-raster::res(var_mask_br)[1]
-raster::res(var_mask_br)[1]/(30/3600) # ~km
+raster::res(var_br)[1]
+raster::res(var_br)[1]/(30/3600) # ~km
 
 # aggregation factor 
-res_actual <- raster::res(var_mask_br)[1]
+res_actual <- raster::res(var_br)[1]
 res_actual
 
 res_adjust <- 0.5
@@ -132,21 +119,27 @@ agg_fac <- res_adjust/res_actual
 agg_fac
 
 # aggregation
-var_mask_br_05 <- raster::aggregate(var_mask_br, fact = agg_fac)
-var_mask_br_05
+var_br_05 <- raster::aggregate(var_br, fact = agg_fac)
+var_br_05
 
 # new resolution
-raster::res(var_mask_br_05)[1]
+raster::res(var_br_05)[1]
 
 # plot
-landscapetools::show_landscape(var_mask_br$bio01)
-landscapetools::show_landscape(var_mask_br_05$bio01)
+landscapetools::show_landscape(var_br$bio01) +
+  geom_polygon(data = var_br$bio01 %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "black", size = .1) +
+  theme(legend.position = "none")
+landscapetools::show_landscape(var_br_05$bio01) +
+  geom_polygon(data = var_br_05$bio01 %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "black", size = .1) +
+  theme(legend.position = "none")
 
 # export
 dir.create("00_var")
 setwd("00_var")
-raster::writeRaster(x = var_mask_br_05, 
-                    filename = paste0("wc20_mascara_ne_brasil_res05g_", names(var_mask_br)), 
+raster::writeRaster(x = var_br_05, 
+                    filename = paste0("wc20_brasil_res05g_", names(var_br)), 
                     bylayer = TRUE, 
                     options = c("COMPRESS=DEFLATE"), 
                     format = "GTiff", 
@@ -164,7 +157,7 @@ setwd("01_correlation")
 getwd()
 
 # extract values
-var_da <- var_mask_br_05 %>% 
+var_da <- var_br_05 %>% 
   raster::values() %>% 
   tibble::as_tibble() %>% 
   tidyr::drop_na()
@@ -187,36 +180,28 @@ cor_table_summary
 # export
 readr::write_csv(cor_table_summary, "correlacao.csv")
 
-# plot
-cor_table %>% 
-  corrr::shave() %>% 
-  corrr::rplot(print_cor = TRUE, 
-             colors = wesanderson::wes_palette(name = "Zissou1", n = 10, type = "continuous"))
-
-# export
-ggsave(filename = "correlacao.tiff", wi = 20, he = 15, units = "cm", dpi = 300, comp = "lzw")
 
 # select variables
 # correlated variables
-fi_07 <- cor_table %>% 
+fi_06 <- cor_table %>% 
   corrr::as_matrix() %>% 
-  caret::findCorrelation(cutoff = .7, names = TRUE, verbose = TRUE)
-fi_07
+  caret::findCorrelation(cutoff = .6, names = TRUE, verbose = TRUE)
+fi_06
 
 # select
-var_da_cor07 <- var_da %>% 
-  dplyr::select(-fi_07)
-var_da_cor07
+var_da_cor06 <- var_da %>% 
+  dplyr::select(-fi_06)
+var_da_cor06
 
 # verify
-var_da_cor07 %>% 
+var_da_cor06 %>% 
   corrr::correlate(method = "spearman") %>% 
   corrr::as_matrix() %>% 
-  caret::findCorrelation(cutoff = .7, names = TRUE, verbose = TRUE)
+  caret::findCorrelation(cutoff = .6, names = TRUE, verbose = TRUE)
 
 # graphic
 tiff("correlacao_plot.tiff", wi = 30, he = 25, un = "cm", res = 300, comp = "lzw")
-pairs.panels(x = var_da_cor07 %>% dplyr::sample_n(1e3), 
+pairs.panels(x = var_da_cor06 %>% dplyr::sample_n(1e3), 
              method = "spearman",
              pch = 20, 
              ellipses = FALSE, 
@@ -229,51 +214,15 @@ pairs.panels(x = var_da_cor07 %>% dplyr::sample_n(1e3),
              ci = TRUE)
 dev.off()
 
-# pca ---------------------------------------------------------------------
+
+# copy var not correlated -------------------------------------------------
 # directory
-setwd("..")
-dir.create("02_pca") 
-setwd("02_pca") 
+setwd(path)
+setwd("03_var/00_var")
 
-# pca
-pca <- FactoMineR::PCA(var_da, scale.unit = TRUE, graph = FALSE)
-pca
-
-# eigenvalues
-eig <- factoextra::get_eig(pca) %>% 
-  tibble::as_tibble() %>% 
-  round(2) %>% 
-  dplyr::mutate(id = rownames(factoextra::get_eig(pca))) %>% 
-  dplyr::select(id, everything())
-eig
-readr::write_csv(eig, "pca_autovalores.csv")
-
-# eigenvalues plot
-factoextra::fviz_eig(pca, addlabels = TRUE, ggtheme = theme_classic())
-ggsave("pca_screeplot.tiff", he = 15, wi = 20, un = "cm", dpi = 300, comp = "lzw")
-
-# contributions
-loa <- pca$var$contrib %>% round(2)
-loa
-write.csv(loa, "pca_contribuicao.csv")
-
-# biplot
-factoextra::fviz_pca(pca, geom = "point", alpha.ind = .5, repel = TRUE, ggtheme = theme_bw())
-ggsave("pca_biplot.tiff", he = 15, wi = 20, un = "cm", dpi = 300, comp = "lzw")
-
-# raster pca
-pca_raster <- RStoolbox::rasterPCA(var_mask_br_05, spca = TRUE) 
-pca_raster
-
-# plot pca map
-landscapetools::show_landscape(pca_raster$map$PC1)
-
-# export
-raster::writeRaster(x = pca_raster$map[[1:6]], 
-                    filename = paste0("wc20_mascara_ne_brasil_res05g_pc0", 1:6), 
-                    bylayer = TRUE, 
-                    options = c("COMPRESS=DEFLATE"), 
-                    format = "GTiff", 
-                    overwrite = TRUE)
+# copy vars to 03_var
+dir() %>% 
+    grep(pattern = paste0(fi_06, collapse = "|"), invert = TRUE, value = TRUE) %>% 
+    file.copy(., "/home/mude/data/gitlab/course-sdm/03_var")
 
 # end ---------------------------------------------------------------------

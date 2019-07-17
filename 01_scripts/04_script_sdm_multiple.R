@@ -2,7 +2,7 @@
 # sdm - multiple algorithm
 # Prof. Matheus Lima-Ribeiro - mslima.ribeiro@gmail.com 
 # mauricio vancine - mauricio.vancine@gmail.com
-# 15-07-2019
+# 17-07-2019
 # -------------------------------------------------------------------------
 
 # preparate r -------------------------------------------------------------
@@ -12,12 +12,10 @@ rm(list = ls())
 # packages
 library(beepr)
 library(dismo)
-library(mgcv)
 library(kernlab)
 library(randomForest)
 library(raster)
 library(rgdal)
-library(rJava)
 library(rnaturalearth)
 library(sf)
 library(tidyverse)
@@ -40,28 +38,29 @@ occ <- readr::read_csv("occ_spocc_filtro_taxonomico_data_espatial_limite_oppc.cs
 occ
 
 # var
-setwd(path); setwd("03_var/02_pca"); 
-var <- dir(pattern = "tif$", recursive = TRUE) %>% 
+setwd(path); setwd("03_var")
+var <- dir(pattern = "tif$") %>% 
   raster::stack() %>% 
   raster::brick()
 var
-landscapetools::show_landscape(var$wc20_mascara_ne_brasil_res05g_pc01)
+landscapetools::show_landscape(var$wc20_brasil_res05g_bio03) +
+  geom_polygon(data = var$wc20_brasil_res05g_bio03 %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "black", size = .1) +
+  theme(legend.position = "none")
 
 # map
 ggplot() +
-  geom_raster(data = var$wc20_mascara_ne_brasil_res05g_pc01 %>% 
+    geom_raster(data = var$wc20_brasil_res05g_bio03 %>% 
                 raster::rasterToPoints() %>% 
                 tibble::as_tibble() %>% 
-                dplyr::rename(var = wc20_mascara_ne_brasil_res05g_pc01), 
-              aes(x, y, fill = var)) +
+                dplyr::rename(bio03 = wc20_brasil_res05g_bio03), 
+              aes(x, y, fill = bio03)) +
+  geom_polygon(data = var$wc20_brasil_res05g_bio03 %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "black", size = .1) +
   geom_point(data = occ, aes(longitude, latitude), size = 2.5, alpha = .7) +
   coord_equal() +
   scale_fill_viridis_c() +
   theme_bw()
-
-# verify maxent -----------------------------------------------------------
-# copy maxent.jar in "~\dismo\java"
-file.exists(paste0(system.file(package = "dismo"), "/java/maxent.jar"))
 
 # enms --------------------------------------------------------------------
 # diretory
@@ -92,7 +91,7 @@ for(i in occ$species %>% unique){ # for to each specie
     dplyr::select(longitude, latitude) %>% 
     dplyr::mutate(id = seq(nrow(.)))
   
-  bg_specie <- dismo::randomPoints(mask = var, n = nrow(pr_specie)) %>% 
+  pa_specie <- dismo::randomPoints(mask = var, n = nrow(pr_specie)) %>% 
     tibble::as_tibble() %>%
     dplyr::rename(longitude = x, latitude = y) %>% 
     dplyr::mutate(id = seq(nrow(.)))
@@ -113,7 +112,7 @@ for(i in occ$species %>% unique){ # for to each specie
       dplyr::select(id) %>% 
       dplyr::pull()
     
-    bg_sample_train <- bg_specie %>% 
+    pa_sample_train <- pa_specie %>% 
       dplyr::sample_frac(partition) %>% 
       dplyr::select(id) %>% 
       dplyr::pull()
@@ -121,11 +120,11 @@ for(i in occ$species %>% unique){ # for to each specie
     # train and test data
     train <- dismo::prepareData(x = var, 
                                 p = pr_specie %>% dplyr::filter(id %in% pr_sample_train) %>% dplyr::select(longitude, latitude), 
-                                b = bg_specie %>% dplyr::filter(id %in% bg_sample_train) %>% dplyr::select(longitude, latitude)) %>% na.omit
+                                b = pa_specie %>% dplyr::filter(id %in% pa_sample_train) %>% dplyr::select(longitude, latitude)) %>% na.omit
     
     test <- dismo::prepareData(x = var, 
                                p = pr_specie %>% dplyr::filter(!id %in% pr_sample_train) %>% dplyr::select(longitude, latitude), 
-                               b = bg_specie %>% dplyr::filter(!id %in% bg_sample_train) %>% dplyr::select(longitude, latitude)) %>% na.omit
+                               b = pa_specie %>% dplyr::filter(!id %in% pa_sample_train) %>% dplyr::select(longitude, latitude)) %>% na.omit
     
     
     ### model fitting ###
@@ -145,13 +144,12 @@ for(i in occ$species %>% unique){ # for to each specie
     
     # presence-absence - machine learning
     RFR <- randomForest::randomForest(formula = pb ~ ., data = train)
-    SVM <- kernlab::ksvm(x = pb ~ ., data = train) # ?
     
     # presence-background
-    MEN <- dismo::maxent(x = train %>% dplyr::select(-pb), p = train %>% dplyr::select(pb))
+    SVM <- kernlab::ksvm(x = pb ~ ., data = train)
     
     # lists
-    fit <- list(bioclim = BIO, domain = DOM, mahalanobis = MAH, glm = GLM, randomforest = RFR, svm = SVM, maxent = MEN)
+    fit <- list(bioclim = BIO, domain = DOM, mahalanobis = MAH, glm = GLM, randomforest = RFR, svm = SVM)
     
     # predict
     for(a in seq(fit)){
