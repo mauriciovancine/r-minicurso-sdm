@@ -22,7 +22,7 @@ dir()
 # import data -------------------------------------------------------------
 # occ
 setwd("02_occ")
-occ <- readr::read_csv("occ_spocc_filtro_taxonomico_data_espatial_limite_oppc.csv")
+occ <- readr::read_csv("occ_spocc_filtros_taxonomico_data_espatial_oppc.csv")
 occ
 
 # binatization - cut threshold --------------------------------------------

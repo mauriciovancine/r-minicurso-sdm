@@ -23,7 +23,7 @@ dir()
 # import data -------------------------------------------------------------
 # occ
 setwd("02_occ")
-occ <- readr::read_csv("occ_spocc_filtro_taxonomico_data_espatial_limite_oppc.csv")
+occ <- readr::read_csv("occ_spocc_filtros_taxonomico_data_espatial_oppc.csv")
 occ
 
 # brazil
@@ -32,9 +32,8 @@ br
 ggplot(br) + geom_sf() + theme_bw()
 
 # names
-na <- c("Consenso média ponderada", "Consenso frequência", "Consenso média ponderada - LPT", 
-        "Consenso média ponderada - P10", "Consenso média ponderada - P20", "Consenso frequência - LPT", 
-        "Consenso frequência - P10", "Consenso frequência - P20")
+na <- c("Consenso média ponderada","Consenso média ponderada - LPT", 
+        "Consenso média ponderada - P10", "Consenso média ponderada - P20")
 na
 
 # figs --------------------------------------------------------------------

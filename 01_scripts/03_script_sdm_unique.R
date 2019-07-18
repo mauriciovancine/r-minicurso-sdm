@@ -29,7 +29,7 @@ dir()
 # import data -------------------------------------------------------------
 # occ
 setwd("02_occ")
-occ <- readr::read_csv("occ_spocc_filtro_taxonomico_data_espatial_limite_oppc.csv")
+occ <- readr::read_csv("occ_spocc_filtros_taxonomico_data_espatial_oppc.csv")
 occ
 
 # var
@@ -160,8 +160,8 @@ tss
 bioclim_proj_thr <- bioclim_proj >= dismo::threshold(bioclim_eval, "spec_sens")
 bioclim_proj_thr
 
-landscapetools::show_landscape(bioclim_proj_thr_spec_sens, discrete = TRUE) +
-  geom_polygon(data = bioclim_proj %>% raster::rasterToPolygons() %>% fortify, 
+landscapetools::show_landscape(bioclim_proj_thr, discrete = TRUE) +
+  geom_polygon(data = bioclim_proj_thr %>% raster::rasterToPolygons() %>% fortify, 
                aes(x = long, y = lat, group = group), fill = NA, color = "gray30", size = .1) +
   geom_point(data = pr_specie %>% dplyr::filter(id %in% pr_sample_train), 
              aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 19) +

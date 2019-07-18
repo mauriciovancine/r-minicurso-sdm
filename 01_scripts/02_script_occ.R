@@ -42,7 +42,7 @@ dir()
 
 # download occurrences ----------------------------------------------------
 # species
-sp <- c("Rhinella schneideri")
+sp <- c("Haddadus binotatus")
 sp
 
 # synonyms
@@ -260,6 +260,6 @@ setwd("02_occ")
 
 # export
 readr::write_csv(occ_data, paste0("occ_spocc_bruto_", lubridate::today(), ".csv"))
-readr::write_csv(occ_data_tax_date_spa_oppc, paste0("occ_spocc_filtro_taxonomico_data_espatial_limite_oppc.csv"))
+readr::write_csv(occ_data_tax_date_spa_oppc, paste0("occ_spocc_filtros_taxonomico_data_espatial_oppc.csv"))
 
-# end ---------------------------------------------------------------------
+# end ---------------------------------------------------------------------s
