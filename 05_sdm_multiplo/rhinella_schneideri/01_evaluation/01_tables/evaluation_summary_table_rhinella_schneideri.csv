@@ -1,0 +1,7 @@
+species,algorithm,tss_mean,tss_sd,auc_mean,auc_sd
+Rhinella schneideri,bioclim,0.531,0.138,0.772,0.088
+Rhinella schneideri,domain,0.677,0.095,0.872,0.053
+Rhinella schneideri,glm,0.615,0.109,0.802,0.07
+Rhinella schneideri,mahalanobis,0.708,0.071,0.889,0.036
+Rhinella schneideri,randomforest,0.746,0.115,0.911,0.058
+Rhinella schneideri,svm,0.7,0.105,0.864,0.057

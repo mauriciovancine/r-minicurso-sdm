@@ -42,7 +42,7 @@ dir()
 
 # download occurrences ----------------------------------------------------
 # species
-sp <- c("Haddadus binotatus")
+sp <- c("Rhinella schneideri")
 sp
 
 # synonyms
@@ -220,6 +220,8 @@ var_id
 
 var_id[!is.na(var_id)] <- raster::cellFromXY(var_id, raster::rasterToPoints(var_id)[, 1:2])
 landscapetools::show_landscape(var_id) +
+  geom_polygon(data = var_id %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "black", size = .1) +
   theme(legend.position = "none")
 
 # oppc
@@ -258,6 +260,6 @@ setwd("02_occ")
 
 # export
 readr::write_csv(occ_data, paste0("occ_spocc_bruto_", lubridate::today(), ".csv"))
-readr::write_csv(occ_data_tax_date_spa_lim_oppc, paste0("occ_spocc_filtro_taxonomico_data_espatial_limite_oppc.csv"))
+readr::write_csv(occ_data_tax_date_spa_oppc, paste0("occ_spocc_filtro_taxonomico_data_espatial_limite_oppc.csv"))
 
 # end ---------------------------------------------------------------------

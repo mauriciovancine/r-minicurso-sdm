@@ -64,7 +64,9 @@ pa_specie <- dismo::randomPoints(mask = var, n = nrow(pr_specie)) %>% # mask - l
   dplyr::mutate(id = seq(nrow(.)))
 pa_specie
 
-landscapetools::show_landscape(var$pc01) +
+landscapetools::show_landscape(var$wc20_brasil_res05g_bio03) +
+  geom_polygon(data = var$wc20_brasil_res05g_bio03 %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "black", size = .1) +
   geom_point(data = pr_specie, aes(longitude, latitude), size = 3, alpha = .7, color = "red") +
   geom_point(data = pa_specie, aes(longitude, latitude), size = 3, alpha = .7, color = "blue") +
   theme(legend.position = "none")
@@ -122,7 +124,10 @@ bioclim_proj <- dismo::predict(var, bioclim_fit, progress = "text")
 bioclim_proj
 
 # map
-landscapetools::show_landscape(bioclim_proj)
+landscapetools::show_landscape(bioclim_proj) +
+  geom_polygon(data = bioclim_proj %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "gray30", size = .1) +
+  theme(legend.position = "none")
 
 # model export
 raster::writeRaster(x = bioclim_proj, 
@@ -144,22 +149,20 @@ plot(bioclim_eval, "ROC")
 bioclim_eval@auc
 
 # tss
-bioclim_eval_thr_id_spec_sens <- which(bioclim_eval@t == dismo::threshold(bioclim_eval, "spec_sens"))
-bioclim_eval_thr_id_spec_sens
+thr_id <- which(bioclim_eval@t == dismo::threshold(bioclim_eval, "spec_sens"))
+thr_id
 
-bioclim_eval_tss_spec_sens <- bioclim_eval@TPR[bioclim_eval_thr_id_spec_sens] + bioclim_eval@TNR[bioclim_eval_thr_id_spec_sens] - 1
-bioclim_eval_tss_spec_sens
+tss <- bioclim_eval@TPR[thr_id] + bioclim_eval@TNR[thr_id] - 1
+tss
 
 # threshold cut
 # sum of the sensitivity and specificity
-bioclim_eval_thr$spec_sens
-
-bioclim_proj_thr_spec_sens <- bioclim_proj >= bioclim_eval_thr$spec_sens
-bioclim_proj_thr_spec_sens
+bioclim_proj_thr <- bioclim_proj >= dismo::threshold(bioclim_eval, "spec_sens")
+bioclim_proj_thr
 
 landscapetools::show_landscape(bioclim_proj_thr_spec_sens, discrete = TRUE) +
-  geom_polygon(data = var$wc20_brasil_res05g_bio03 %>% raster::rasterToPolygons() %>% fortify, 
-               aes(x = long, y = lat, group = group), fill = NA, color = "black", size = .1) +
+  geom_polygon(data = bioclim_proj %>% raster::rasterToPolygons() %>% fortify, 
+               aes(x = long, y = lat, group = group), fill = NA, color = "gray30", size = .1) +
   geom_point(data = pr_specie %>% dplyr::filter(id %in% pr_sample_train), 
              aes(longitude, latitude), size = 3, alpha = .7, color = "red", pch = 19) +
   geom_point(data = pr_specie %>% dplyr::filter(!id %in% pr_sample_train), 

@@ -1,48 +1,45 @@
 name,species,longitude,latitude,year,base,oppc,n
-Haddadus binotatus,haddadus_binotatus,-40.273333,-19.820278,1972,vertnet,3939,47
-Haddadus binotatus,haddadus_binotatus,-39.732222,-18.593333,1972,vertnet,3782,47
-Haddadus binotatus,haddadus_binotatus,-40.150556,-18.030278,1973,vertnet,3702,47
-Haddadus binotatus,haddadus_binotatus,-41.184722,-20.603611,1973,vertnet,4095,47
-Haddadus binotatus,haddadus_binotatus,-45.069722,-23.430278,1973,vertnet,4561,47
-Haddadus binotatus,haddadus_binotatus,-40.6,-19.9167,1974,vertnet,4017,47
-Haddadus binotatus,haddadus_binotatus,-45.83,-23.63,1975,vertnet,4560,47
-Haddadus binotatus,haddadus_binotatus,-40.58,-19.83,1977,vertnet,3938,47
-Haddadus binotatus,haddadus_binotatus,-42.98,-22.43,1977,vertnet,4408,47
-Haddadus binotatus,haddadus_binotatus,-48.9333,-26.2,1978,vertnet,4949,47
-Haddadus binotatus,haddadus_binotatus,-48.9742,-25.4,1978,vertnet,4870,47
-Haddadus binotatus,haddadus_binotatus,-49.2164,-26.7333,1982,vertnet,5027,47
-Haddadus binotatus,haddadus_binotatus,-47.13,-23.3,1984,vertnet,4478,47
-Haddadus binotatus,haddadus_binotatus,-39.3167,-15.0946,1988,vertnet,3230,47
-Haddadus binotatus,haddadus_binotatus,-47.549722,-24.700278,1988,vertnet,4714,47
-Haddadus binotatus,haddadus_binotatus,-40.406667,-19.9325,1989,vertnet,4018,47
-Haddadus binotatus,haddadus_binotatus,-39.280278,-14.785833,1990,vertnet,3151,47
-Haddadus binotatus,haddadus_binotatus,-41.868611,-20.931667,1991,vertnet,4173,47
-Haddadus binotatus,haddadus_binotatus,-48.34,-24,1994,vertnet,4634,47
-Haddadus binotatus,haddadus_binotatus,-41.366667,-21.065,2002,vertnet,4174,47
-Haddadus binotatus,haddadus_binotatus,-46.13,-23.850278,2002,vertnet,4638,47
-Haddadus binotatus,haddadus_binotatus,-40.659167,-20.363333,2005,vertnet,4096,47
-Haddadus binotatus,haddadus_binotatus,-45.325205,-21.936627,2006,inat,4324,47
-Haddadus binotatus,haddadus_binotatus,-45.31,-23.22,2006,vertnet,4482,47
-Haddadus binotatus,haddadus_binotatus,-39.734167,-14.138056,2008,vertnet,3071,47
-Haddadus binotatus,haddadus_binotatus,-48.35,-23.4,2008,vertnet,4555,47
-"Haddadus binotatus (Spix, 1824)",haddadus_binotatus,-47.869,-24.984,2009,gbif,4793,47
-"Haddadus binotatus (Spix, 1824)",haddadus_binotatus,-43.875,-20.478,2009,gbif,4090,47
-Haddadus binotatus,haddadus_binotatus,-43.646568,-20.299837,2011,inat,4011,47
-Haddadus binotatus,haddadus_binotatus,-46.0025,-23.249444,2011,vertnet,4480,47
-Haddadus binotatus,haddadus_binotatus,-46,-23.249167,2011,vertnet,4481,47
-Haddadus binotatus,haddadus_binotatus,-44.855,-22.545556,2011,vertnet,4404,47
-Haddadus binotatus,haddadus_binotatus,-46.366389,-23.373333,2011,vertnet,4559,47
-Haddadus binotatus,haddadus_binotatus,-48.8978601,-27.096556,2013,inat,5107,47
-Haddadus binotatus,haddadus_binotatus,-42.8586297,-20.8023191,2013,inat,4092,47
-Haddadus binotatus,haddadus_binotatus,-43.4111022949,-22.5632932447,2014,inat,4407,47
-Haddadus binotatus,haddadus_binotatus,-43.9026905793,-22.6190735857,2014,inat,4406,47
-"Haddadus binotatus (Spix, 1824)",haddadus_binotatus,-47.478669,-20.6675,2014,gbif,4083,47
-"Haddadus binotatus (Spix, 1824)",haddadus_binotatus,-47.4935,-24.373,2014,gbif,4715,47
-"Haddadus binotatus (Spix, 1824)",haddadus_binotatus,-42.235,-20.60225,2014,gbif,4093,47
-"Haddadus binotatus (Spix, 1824)",haddadus_binotatus,-42.689167,-21.234722,2015,gbif,4171,47
-Haddadus binotatus,haddadus_binotatus,-41.851972,-20.421417,2016,vertnet,4094,47
-Haddadus binotatus,haddadus_binotatus,-49.0183111111,-26.8863972222,2017,inat,5106,47
-"Haddadus binotatus (Spix, 1824)",haddadus_binotatus,-40.871003,-18.611125,2017,gbif,3780,47
-"Haddadus binotatus (Spix, 1824)",haddadus_binotatus,-44.148056,-23.141111,2017,gbif,4484,47
-Haddadus binotatus,haddadus_binotatus,-48.9137033746,-26.4529134001,2018,inat,5028,47
-Haddadus binotatus,haddadus_binotatus,-44.7703216667,-23.209505,2019,inat,4483,47
+Rhinella schneideri,rhinella_schneideri,-43.714167,-19.169167,1972,vertnet,3853,44
+Rhinella schneideri,rhinella_schneideri,-41.855556,-11.304444,1974,vertnet,2593,44
+Rhinella schneideri,rhinella_schneideri,-51.38,-22.120278,1976,vertnet,4312,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-55.84495,-22.6833,1979,gbif,4382,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-56.52,-22.21,1979,gbif,4301,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-57.66,-22.3,1979,gbif,4299,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-56.43,-22.2,1979,gbif,4302,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-54.35,-24.05,1979,gbif,4622,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-54.5,-25.2333,1980,gbif,4780,44
+BUFO PARACNEMIS,rhinella_schneideri,-58.17,-20.23,1984,vertnet,3982,44
+Rhinella schneideri,rhinella_schneideri,-58.4667,-15.85,1984,vertnet,3350,44
+Rhinella schneideri,rhinella_schneideri,-54.6333,-16.4667,1984,vertnet,3436,44
+Rhinella schneideri,rhinella_schneideri,-56.8,-17.3333,1985,vertnet,3511,44
+Rhinella schneideri,rhinella_schneideri,-59.3667,-15.1819,1985,vertnet,3190,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-57.15,-22.3333,1987,gbif,4300,44
+Rhinella schneideri,rhinella_schneideri,-56.6944,-20.1319,1987,vertnet,3985,44
+Rhinella schneideri,rhinella_schneideri,-47.7,-21.6,1988,vertnet,4240,44
+Rhinella schneideri,rhinella_schneideri,-40.072222,-19.391111,1990,vertnet,3939,44
+Rhinella schneideri,rhinella_schneideri,-48.445,-22.886667,1990,vertnet,4476,44
+Rhinella schneideri,rhinella_schneideri,-40.052222,-18.009722,1994,vertnet,3702,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-62.087222,-12.006111,1997,gbif,2710,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-61.969722,-9.419722,1997,gbif,2316,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-53.379,-18.035,1998,gbif,3676,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-56.046,-19.612,1998,gbif,3907,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-53.429,-18.45,1998,gbif,3755,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-57,-19.567,1998,gbif,3906,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-56.382,-21.102,1998,gbif,4144,44
+"Bufo paracnemis Lutz, 1925",rhinella_schneideri,-56.429,-21.436,1998,gbif,4223,44
+Rhinella schneideri,rhinella_schneideri,-48.119722,-22.280278,1999,vertnet,4318,44
+Bufo paracnemis,rhinella_schneideri,-55.6119461,-18.1369438,2000,vertnet,3671,44
+Rhinella schneideri,rhinella_schneideri,-39.732222,-18.593333,2000,vertnet,3782,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-49.962361,-9.311028,2005,gbif,2261,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-49.943694,-9.348361,2005,gbif,2340,44
+Rhinella schneideri,rhinella_schneideri,-48.35,-23.4,2009,vertnet,4555,44
+Rhinella schneideri,rhinella_schneideri,-51.707361,-20.993472,2013,vertnet,4153,44
+Rhinella schneideri,rhinella_schneideri,-42.507679,-11.819167,2016,vertnet,2670,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-39.84265,-19.57405,2016,gbif,3940,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-40.473353,-18.983586,2017,gbif,3860,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-57.037544,-19.485006,2017,gbif,3905,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-40.736178,-19.694797,2017,gbif,3938,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-40.978169,-18.521125,2017,gbif,3780,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-42.618056,-14.059167,2018,gbif,3065,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-44.206111,-18.36,2018,gbif,3773,44
+"Rhinella schneideri (Werner, 1894)",rhinella_schneideri,-40.646389,-18.257778,2018,gbif,3701,44

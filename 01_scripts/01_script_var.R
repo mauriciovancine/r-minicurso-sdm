@@ -214,7 +214,6 @@ pairs.panels(x = var_da_cor06 %>% dplyr::sample_n(1e3),
              ci = TRUE)
 dev.off()
 
-
 # copy var not correlated -------------------------------------------------
 # directory
 setwd(path)
