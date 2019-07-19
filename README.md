@@ -54,5 +54,6 @@ Para rodar as linhas, basta colocar o cursor na linha de código a ser executada
 Para ajuda, envie e-mail para: <br>
 
 - Maurício Vancine (mauricio.vancine@gmail.com)
+- João Giovanelli (jgiovanelli@gmail.com)
 
 ---
