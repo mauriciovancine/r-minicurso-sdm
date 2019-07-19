@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # occ - download and taxonomic, data, and spatial filter
 # mauricio vancine - mauricio.vancine@gmail.com
-# 17-07-2019
+# 19-07-2019
 # -------------------------------------------------------------------------
 
 # preparate r -------------------------------------------------------------
@@ -47,12 +47,11 @@ sp
 
 # synonyms
 syn <- taxize::synonyms(x = sp, db = "itis") %>% 
-  taxize::synonyms_df() %>% 
-  dplyr::select(.id, syn_name)
+  taxize::synonyms_df()
 syn
 
 # combine
-sp_syn <- c(sp, syn$syn_name) %>% unique
+if(ncol(syn) > 4){sp_syn <- c(sp, syn$syn_name) %>% unique} else{sp_syn <- sp}
 sp_syn
 
 # bases for download
